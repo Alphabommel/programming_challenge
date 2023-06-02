@@ -1,9 +1,12 @@
 package de.exxcellent.challenge;
 
 import de.exxcellent.challenge.data.DataCollector;
+import de.exxcellent.challenge.data.file.csv.CSVFootballDataParser;
 import de.exxcellent.challenge.data.file.csv.CSVWeatherDataParser;
 import de.exxcellent.challenge.exceptions.DataInaccessibleException;
+import de.exxcellent.challenge.models.FootballData;
 import de.exxcellent.challenge.models.WeatherData;
+import de.exxcellent.challenge.services.FootballDataService;
 import de.exxcellent.challenge.services.WeatherDataService;
 
 import java.util.List;
@@ -35,6 +38,12 @@ public final class App {
                     break;
 
                 case "--football":
+                    DataCollector<FootballData> footballDataDataCollector = new CSVFootballDataParser(args[1]);
+
+                    List<FootballData> footballData = footballDataDataCollector.getData();
+                    String teamWithSmallestGoalSpread = new FootballDataService().getTeamWithSmallestGoalSpread(footballData)
+                            .orElseThrow();
+                    System.out.printf("Day with smallest temperature spread : %s%n", teamWithSmallestGoalSpread);
                     break;
             }
         } catch (DataInaccessibleException | NoSuchElementException e) {

@@ -9,8 +9,13 @@ import org.junit.jupiter.api.Test;
 class AppTest {
 
     @Test
-    void runFootball() {
+    void runWeather() {
         App.main("--weather", "weather.csv");
+    }
+
+    @Test
+    void runFootball() {
+        App.main("--football", "football.csv");
     }
 
 }
