@@ -1,6 +1,7 @@
 package de.exxcellent.challenge.data.csv;
 
 import de.exxcellent.challenge.data.DataCollector;
+import de.exxcellent.challenge.data.file.csv.CSVWeatherDataParser;
 import de.exxcellent.challenge.exceptions.DataInaccessibleException;
 import de.exxcellent.challenge.models.WeatherData;
 import org.junit.jupiter.api.Test;
@@ -10,7 +11,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class WeatherDataParserTest {
+class CSVWeatherDataParserTest {
 
     @Test
     void shouldBeListOfWeatherDataWhenParsingWeatherCSV() throws DataInaccessibleException {
@@ -21,13 +22,13 @@ class WeatherDataParserTest {
         weatherDataList.add(new WeatherData(4,77,59,68,51.1,0,110,9.1,130,12,8.6,62,40,1021.1));
         weatherDataList.add(new WeatherData(5,90,66,78,68.3,0,220,8.3,260,12,6.9,84,55,1014.4));
 
-        DataCollector<WeatherData> dataCollector = new WeatherDataParser("test/weather.csv");
+        DataCollector<WeatherData> dataCollector = new CSVWeatherDataParser("test/weather.csv");
         assertEquals(weatherDataList.toString(), dataCollector.getData().toString());
     }
 
     @Test
     void shouldBeDataInaccessibleExceptionWhenParsingMalformedCSV() {
-        DataCollector<WeatherData> dataCollector = new WeatherDataParser("test/weather_malformed.csv");
+        DataCollector<WeatherData> dataCollector = new CSVWeatherDataParser("test/weather_malformed.csv");
 
         assertThrows(DataInaccessibleException.class,
                 dataCollector::getData);
@@ -35,7 +36,7 @@ class WeatherDataParserTest {
 
     @Test
     void shouldBeDataInaccessibleExceptionWhenNoMatchingCSVFile() {
-        DataCollector<WeatherData> dataCollector = new WeatherDataParser("test/wetter.csv");
+        DataCollector<WeatherData> dataCollector = new CSVWeatherDataParser("test/wetter.csv");
 
         assertThrows(DataInaccessibleException.class,
                 dataCollector::getData);

@@ -1,7 +1,7 @@
 package de.exxcellent.challenge;
 
 import de.exxcellent.challenge.data.DataCollector;
-import de.exxcellent.challenge.data.csv.WeatherDataParser;
+import de.exxcellent.challenge.data.file.csv.CSVWeatherDataParser;
 import de.exxcellent.challenge.exceptions.DataInaccessibleException;
 import de.exxcellent.challenge.models.WeatherData;
 import de.exxcellent.challenge.services.WeatherDataService;
@@ -26,7 +26,7 @@ public final class App {
         try {
             switch (args[0]) {
                 case "--weather":
-                    DataCollector<WeatherData> weatherDataDataCollector = new WeatherDataParser(args[1]);
+                    DataCollector<WeatherData> weatherDataDataCollector = new CSVWeatherDataParser(args[1]);
 
                     List<WeatherData> weatherData = weatherDataDataCollector.getData();
                     Integer dayWithSmallestTempSpread = new WeatherDataService().getDayWithSmallestTemperatureSpread(weatherData)

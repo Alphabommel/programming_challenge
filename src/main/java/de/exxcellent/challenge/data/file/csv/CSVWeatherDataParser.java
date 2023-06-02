@@ -1,6 +1,7 @@
-package de.exxcellent.challenge.data.csv;
+package de.exxcellent.challenge.data.file.csv;
 
 import de.exxcellent.challenge.data.DataCollector;
+import de.exxcellent.challenge.data.file.FileParser;
 import de.exxcellent.challenge.exceptions.DataInaccessibleException;
 import de.exxcellent.challenge.models.WeatherData;
 
@@ -11,11 +12,11 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class WeatherDataParser implements DataCollector<WeatherData> {
+public class CSVWeatherDataParser implements DataCollector<WeatherData>, FileParser<WeatherData> {
 
     private final String fileName;
-    private final Path path = Path.of("src/main/resources/de/exxcellent/challenge/");
-    public WeatherDataParser(String fileName) {
+
+    public CSVWeatherDataParser(String fileName) {
         this.fileName = fileName;
     }
 
