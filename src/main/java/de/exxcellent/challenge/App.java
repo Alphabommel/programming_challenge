@@ -1,5 +1,14 @@
 package de.exxcellent.challenge;
 
+import de.exxcellent.challenge.data.DataCollector;
+import de.exxcellent.challenge.data.csv.WeatherDataParser;
+import de.exxcellent.challenge.exceptions.DataInaccessibleException;
+import de.exxcellent.challenge.models.WeatherData;
+import de.exxcellent.challenge.services.WeatherDataService;
+
+import java.util.List;
+import java.util.NoSuchElementException;
+
 /**
  * The entry class for your solution. This class is only aimed as starting point and not intended as baseline for your software
  * design. Read: create your own classes and packages as appropriate.
@@ -14,12 +23,22 @@ public final class App {
      */
     public static void main(String... args) {
 
-        // Your preparation code …
+        try {
+            switch (args[0]) {
+                case "--weather":
+                    DataCollector<WeatherData> weatherDataDataCollector = new WeatherDataParser(args[1]);
 
-        String dayWithSmallestTempSpread = "Someday";     // Your day analysis function call …
-        System.out.printf("Day with smallest temperature spread : %s%n", dayWithSmallestTempSpread);
+                    List<WeatherData> weatherData = weatherDataDataCollector.getData();
+                    Integer dayWithSmallestTempSpread = new WeatherDataService().getDayWithSmallestTemperatureSpread(weatherData)
+                            .orElseThrow();
+                    System.out.printf("Day with smallest temperature spread : %s%n", dayWithSmallestTempSpread);
+                    break;
 
-        String teamWithSmallestGoalSpread = "A good team"; // Your goal analysis function call …
-        System.out.printf("Team with smallest goal spread       : %s%n", teamWithSmallestGoalSpread);
+                case "--football":
+                    break;
+            }
+        } catch (DataInaccessibleException | NoSuchElementException e) {
+            System.out.println("Failed to load data.");
+        }
     }
 }
